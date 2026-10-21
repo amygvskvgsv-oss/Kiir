@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VideoX | دنیای ویدئو</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --red: #ff123b;
+    --bg: #050607;
+    --panel: #0c0e12;
+    --line: #29313b;
+    --muted: #8b96a5;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: #fff;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 4%;
+    background: #08090b;
+    border-bottom: 1px solid var(--line);
+}
+
+.logo {
+    direction: ltr;
+    white-space: nowrap;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: var(--red);
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #c3c9d2;
+    font-size: 13px;
+}
+
+nav a:hover {
+    color: var(--red);
+}
+
+.search {
+    width: 220px;
+    max-width: 40%;
+    padding: 12px;
+    color: white;
+    background: #11151a;
+    border: 1px solid #343c46;
+    border-radius: 25px;
+    outline: none;
+}
+
+.search:focus {
+    border-color: var(--red);
+}
+
+.hero {
+    padding: 65px 6%;
+    background:
+        radial-gradient(ellipse at 80% 50%, #520819, transparent 55%),
+        linear-gradient(110deg, #08090b, #17050a, #08090b);
+    border-bottom: 1px solid var(--line);
+}
+
+.hero h1 {
+    font-size: clamp(25px, 4vw, 38px);
+    line-height: 1.7;
+}
+
+.hero h1 span {
+    color: var(--red);
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 2;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px 3%;
+}
+
+.category {
+    border: 1px solid var(--line);
+    border-radius: 25px;
+    padding: 11px 17px;
+    color: #c6cbd3;
+    background: #0b0d10;
+    font-size: 12px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 22px;
+    padding: 0 3% 35px;
+}
+
+.section-title {
+    margin: 25px 0;
+    font-size: 18px;
+}
+
+.section-title span {
+    color: var(--red);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px 14px;
+}
+
+.card {
+    min-width: 0;
+    cursor: pointer;
+}
+
+.thumbnail {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #343d48;
+    border-radius: 7px;
+    background:
+        radial-gradient(ellipse at 70% 35%, #63202e, transparent 45%),
+        linear-gradient(135deg, #201016, #10161d, #32101a);
+    transition: .25s;
+}
+
+.card:hover .thumbnail {
+    border-color: var(--red);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px #ff123b15;
+}
+
+.art {
+    font-size: 45px;
+    opacity: .5;
+}
+
+.lock {
+    position: absolute;
+    top: 28%;
+    font-size: 27px;
+}
+
+.unlock {
+    position: absolute;
+    top: 52%;
+    background: #570817;
+    border-radius: 20px;
+    padding: 8px 10px;
+    color: white;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.duration {
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    padding: 4px 6px;
+    background: #050607e8;
+    border-radius: 4px;
+    font-size: 11px;
+    direction: ltr;
+}
+
+.card h3 {
+    margin: 12px 3px;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.badge {
+    padding: 4px 7px;
+    border-radius: 5px;
+    border: 1px solid #414b58;
+}
+
+.new {
+    background: #850b23;
+    color: white;
+    border-color: #e51a3d;
+}
+
+/* پنل ورود نمایشی */
+
+.login {
+    align-self: start;
+    margin-top: 58px;
+    padding: 22px 16px;
+    text-align: center;
+    border: 1px solid var(--red);
+    border-radius: 14px;
+    background: linear-gradient(150deg, #15070b, #08090b);
+}
+
+.big-lock {
+    font-size: 34px;
+}
+
+.login h2 {
+    font-size: 19px;
+}
+
+.login p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 2;
+}
+
+.field {
+    margin: 13px 0;
+}
+
+.field input {
+    width: 100%;
+    padding: 13px;
+    color: white;
+    background: #080a0d;
+    border: 1px solid #3b4551;
+    border-radius: 9px;
+    outline: none;
+}
+
+.field input:focus {
+    border-color: var(--red);
+}
+
+.primary {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: var(--red);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.primary:hover {
+    background: #d9002c;
+}
+
+.notice {
+    display: none;
+    color: #ff8da3;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* پنجره باز شدن کارت */
+
+.modal-back {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #000d;
+}
+
+.modal {
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    text-align: center;
+    border: 1px solid var(--red);
+    border-radius: 15px;
+    background: #0c0e12;
+}
+
+.modal h2 {
+    font-size: 20px;
+}
+
+.modal p {
+    color: #aab3bf;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.close {
+    float: left;
+    color: #bbb;
+    background: none;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 24px 3%;
+    border-top: 1px solid var(--line);
+    color: #7e8998;
+    font-size: 11px;
+}
+
+@media(max-width: 1000px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .login {
+        margin-top: 15px;
+        grid-row: 1;
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-wrap: wrap;
+        padding: 15px 4%;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    nav {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+    .search {
+        width: 42%;
+    }
+
+    .hero {
+        padding: 35px 5%;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 10px;
+    }
+
+    .thumbnail {
+        height: 150px;
+    }
+
+    .layout {
+        padding: 0 4% 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><span>▶</span> Video<span>X</span></div>
+
+    <nav>
+        <a href="#">خانه</a>
+        <a href="#videos">جدیدترین‌ها</a>
+        <a href="#videos">محبوب‌ترین‌ها</a>
+        <a href="#categories">دسته‌ها</a>
+    </nav>
+
+    <input
+        class="search"
+        id="search"
+        type="search"
+        placeholder="⌕ جستجو در سایت..."
+    >
+</header>
+
+<section class="hero">
+    <h1>به دنیای <span>لذت و هیجان</span> خوش آمدید ❤️</h1>
+    <p>ویدئوهای جذاب و سرگرمی‌های جدید، فقط برای شما...</p>
+</section>
+
+<div class="categories" id="categories">
+    <span class="category">☆ تازه‌ها</span>
+    <span class="category">▣ فیلم کوتاه</span>
+    <span class="category">♧ سرگرمی</span>
+    <span class="category">★ منتخب‌ها</span>
+    <span class="category">▦ دسته‌بندی‌ها</span>
+    <span class="category">♥ محبوب‌ترین‌ها</span>
+    <span class="category">♨ جدیدترین‌ها</span>
+</div>
+
+<div class="layout">
+
+    <main id="videos">
+        <h2 class="section-title">
+            <span>♨</span> جدیدترین‌ها
+        </h2>
+
+        <div class="grid" id="videoGrid"></div>
+    </main>
+
+    <aside class="login">
+        <div class="big-lock">🔒</div>
+        <h2>ورود به سایت</h2>
+        <p>برای ورود آزمایشی، اطلاعات دلخواه وارد کنید.</p>
+
+        <form id="loginForm">
+            <div class="field">
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="نام کاربری آزمایشی"
+                    autocomplete="off"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="رمز عبور آزمایشی"
+                    autocomplete="off"
+                    required
+                >
+            </div>
+
+            <button class="primary" type="submit">ورود</button>
+
+            <p class="notice" id="notice">
+                این نسخه نمایشی است. اطلاعات ورود ذخیره یا ارسال نمی‌شود.
+            </p>
+        </form>
+
+        <p>حساب کاربری نداری؟ <span style="color:#ff123b">ثبت‌نام</span></p>
+    </aside>
+
+</div>
+
+<footer>
+    <div class="logo" style="font-size:17px">
+        <span>▶</span> Video<span>X</span>
+    </div>
+    <span>© 2026 VideoX</span>
+    <span>ساخته شده با ❤️</span>
+</footer>
+
+<div class="modal-back" id="modalBack">
+    <div class="modal">
+        <button class="close" id="closeModal">×</button>
+        <div style="font-size:35px">🔐</div>
+        <h2 id="modalTitle">برای باز کردن ضربه بزنید 🗝️</h2>
+        <p id="modalText">
+            این یک پیش‌نمایش نمایشی است.
+        </p>
+        <button class="primary" id="modalOk">متوجه شدم</button>
+    </div>
+</div>
+
+<script>
+const videos = [
+    ["لحظات بی‌پایان", "12:34", "324.5K", "🎞️"],
+    ["شب خاص", "15:27", "512.3K", "🌙"],
+    ["بازی با احساسات", "10:48", "287.6K", "✨"],
+    ["دوباره با تو", "18:06", "1.2M", "🎬"],
+    ["خاطره‌های جذاب", "14:12", "693.1K", "🎭"],
+    ["عشق ممنوع", "11:36", "412.9K", "💫"],
+    ["تجربه جدید", "16:22", "876.4K", "🎥"],
+    ["همیشه و همه‌جا", "13:58", "643.1K", "🌆"]
+];
+
+const grid = document.getElementById("videoGrid");
+
+videos.forEach((video) => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.dataset.title = video[0].toLowerCase();
+
+    card.innerHTML = `
+        <div class="thumbnail">
+            <span class="art">${video[3]}</span>
+            <span class="lock">🔒</span>
+            <span class="unlock">🗝️ برای باز کردن ضربه بزنید</span>
+            <span class="duration">${video[1]}</span>
+        </div>
+
+        <h3>${video[0]} ...</h3>
+
+        <div class="meta">
+            <span>${video[2]} ◉</span>
+            <span class="badge new">جدید</span>
+            <span class="badge">HD</span>
+        </div>
+    `;
+
+    card.addEventListener("click", () => {
+        document.getElementById("modalTitle").textContent =
+            "برای باز کردن ضربه بزنید 🗝️";
+
+        document.getElementById("modalText").textContent =
+            "«" + video[0] +
+            "» یک کارت نمایشی است. می‌توانید بعداً ویدئوی مجاز خودتان را اضافه کنید.";
+
+        document.getElementById("modalBack").style.display = "flex";
+    });
+
+    grid.appendChild(card);
+});
+
+/* بستن پنجره */
+document.getElementById("closeModal").onclick = closeModal;
+document.getElementById("modalOk").onclick = closeModal;
+
+document.getElementById("modalBack").addEventListener("click", function(e) {
+    if (e.target === this) closeModal();
+});
+
+function closeModal() {
+    document.getElementById("modalBack").style.display = "none";
+}
+
+/* جستجو */
+document.getElementById("search").addEventListener("input", function() {
+    const query = this.value.trim().toLowerCase();
+
+    document.querySelectorAll(".card").forEach(card => {
+        card.style.display =
+            card.dataset.title.includes(query) ? "" : "none";
+    });
+});
+
+/* ورود نمایشی؛ اطلاعات نه ذخیره می‌شوند و نه ارسال */
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    document.getElementById("notice").style.display = "block";
+
+    document.getElementById("password").value = "";
+});
+</script>
+
+</body>
+</html>
